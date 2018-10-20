@@ -1,0 +1,41 @@
+- install docker
+
+sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+
+sudo apt-get install docker-ce
+
+- install golang
+
+wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
+
+sudo tar -xvf go1.10.3.linux-amd64.tar.gz
+
+sudo mv go /usr/local
+
+export PATH=/usr/local/go/bin:$PATH
+
+- Building a light weigth go docker
+
+cp  /etc/ssl/certs/ca-certificates.crt .
+
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
+sudo docker build -t to_delete .
+
